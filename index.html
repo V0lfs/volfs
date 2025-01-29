@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ еды</title>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #ff6f61, #ff4d4d);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: #ff4d4d;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .container {
+            padding: 20px;
+        }
+        .product {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px 10px 0 0;
+        }
+        .product h3 {
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #ff4d4d;
+        }
+        .product p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .cart {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff1f1f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Доставка еды 🍕</h1>
+    </header>
+    <nav>
+        <a href="#menu">🍴 Меню</a>
+        <a href="#cart">🛒 Корзина</a>
+        <a href="#about">ℹ️ О нас</a>
+        <a href="#contacts">📞 Контакты</a>
+    </nav>
+    <div class="container">
+        <section id="menu">
+            <h2>Меню</h2>
+            <div class="product">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Pepperoni_pizza.jpg/800px-Pepperoni_pizza.jpg" alt="Пепперони">
+                <h3>Пепперони</h3>
+                <p>Пикантная пепперони, моцарелла, томатный соус</p>
+                <p><strong>800₽</strong></p>
+                <button onclick="addToCart('Пепперони', 800)">Добавить в корзину</button>
+            </div>
+            <div class="product">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Margherita_pizza.jpg/800px-Margherita_pizza.jpg" alt="Маргарита">
+                <h3>Маргарита</h3>
+                <p>Классическая маргарита с томатами и базиликом</p>
+                <p><strong>700₽</strong></p>
+                <button onclick="addToCart('Маргарита', 700)">Добавить в корзину</button>
+            </div>
+        </section>
+        <section id="cart">
+            <h2>Корзина</h2>
+            <div class="cart" id="cart-items">
+                <!-- Корзина будет заполняться динамически -->
+            </div>
+            <p><strong>Итого: <span id="total">0₽</span></strong></p>
+            <button onclick="checkout()">Оформить заказ</button>
+        </section>
+        <section id="about">
+            <h2>О нас</h2>
+            <p>Мы доставляем вкусную еду прямо к вашему порогу!</p>
+        </section>
+        <section id="contacts">
+            <h2>Контакты</h2>
+            <p>Телефон: +7 (999) 123-45-67</p>
+            <p>Email: support@fooddelivery.com</p>
+        </section>
+    </div>
+    <footer>
+        &copy; 2023 Доставка еды
+    </footer>
+    <script>
+        let cart = [];
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+        }
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const total = document.getElementById('total');
+            cartItems.innerHTML = '';
+            let totalPrice = 0;
+            cart.forEach(item => {
+                const div = document.createElement('div');
+                div.textContent = `${item.name} - ${item.price}₽`;
+                cartItems.appendChild(div);
+                totalPrice += item.price;
+            });
+            total.textContent = `${totalPrice}₽`;
+        }
+        function checkout() {
+            alert('Спасибо за заказ! Мы свяжемся с вами.');
+        }
+    </script>
+</body>
+</html>
