@@ -25,16 +25,37 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        button {
-            background-color: #ff4d4d;
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .cart-item button {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .cart-item button:hover {
+            background: #ff1f1f;
+        }
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            background: #ff4d4d;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 20px;
             cursor: pointer;
+            text-align: center;
+            text-decoration: none;
             transition: background 0.3s ease;
         }
-        button:hover {
+        .back-button:hover {
             background-color: #ff1f1f;
         }
     </style>
@@ -43,6 +64,7 @@
     <header>
         <h1>Корзина 🛒</h1>
     </header>
+    <a href="index.html" class="back-button">← Назад</a>
     <div class="cart" id="cart-items">
         <!-- Корзина будет заполняться динамически -->
     </div>
@@ -50,22 +72,35 @@
     <button onclick="checkout()">Оформить заказ</button>
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItems = document.getElementById('cart-items');
+        const total = document.getElementById('total');
+
         function updateCart() {
-            const cartItems = document.getElementById('cart-items');
-            const total = document.getElementById('total');
             cartItems.innerHTML = '';
             let totalPrice = 0;
-            cart.forEach(item => {
+            cart.forEach((item, index) => {
                 const div = document.createElement('div');
-                div.textContent = `${item.name} - ${item.price}₽`;
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <span>${item.name} - ${item.price}₽</span>
+                    <button onclick="removeFromCart(${index})">Удалить</button>
+                `;
                 cartItems.appendChild(div);
                 totalPrice += item.price;
             });
             total.textContent = `${totalPrice}₽`;
         }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
         function checkout() {
             alert('Спасибо за заказ! Мы свяжемся с вами.');
         }
+
         updateCart();
     </script>
 </body>
