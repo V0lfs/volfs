@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff6f61, #ff4d4d);
+            color: white;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .cart {
+            background: white;
+            color: black;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff1f1f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Корзина 🛒</h1>
+    </header>
+    <div class="cart" id="cart-items">
+        <!-- Корзина будет заполняться динамически -->
+    </div>
+    <p><strong>Итого: <span id="total">0₽</span></strong></p>
+    <button onclick="checkout()">Оформить заказ</button>
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const total = document.getElementById('total');
+            cartItems.innerHTML = '';
+            let totalPrice = 0;
+            cart.forEach(item => {
+                const div = document.createElement('div');
+                div.textContent = `${item.name} - ${item.price}₽`;
+                cartItems.appendChild(div);
+                totalPrice += item.price;
+            });
+            total.textContent = `${totalPrice}₽`;
+        }
+        function checkout() {
+            alert('Спасибо за заказ! Мы свяжемся с вами.');
+        }
+        updateCart();
+    </script>
+</body>
+</html>
