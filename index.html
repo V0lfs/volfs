@@ -58,6 +58,7 @@
         .product img {
             width: 100%;
             height: auto;
+            border-radius: 10px 10px 0 0;
         }
         .product h3 {
             margin: 10px 0;
@@ -88,6 +89,35 @@
             bottom: 0;
             width: 100%;
         }
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        /* Кнопка "Назад" */
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #ff1f1f;
+        }
     </style>
 </head>
 <body>
@@ -100,6 +130,7 @@
         <a href="about.html">ℹ️ О нас</a>
         <a href="contacts.html">📞 Контакты</a>
         <a href="promotions.html">🎁 Акции</a>
+        <a href="delivery.html">🚚 Доставка и оплата</a>
     </nav>
     <div class="container" id="menu">
         <div class="product">
@@ -134,11 +165,24 @@
     <footer>
         &copy; 2023 Доставка еды
     </footer>
+    <!-- Уведомление -->
+    <div class="notification" id="notification"></div>
     <script>
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
         function addToCart(name, price) {
             cart.push({ name, price });
-            alert(`${name} добавлен в корзину!`);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showNotification(`${name} добавлен в корзину!`);
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         }
     </script>
 </body>
