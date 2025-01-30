@@ -12,6 +12,9 @@ mongoose.connect('mongodb://localhost:27017/food-delivery', {
 const orderSchema = new mongoose.Schema({
     items: Array,
     total: Number,
+    address: String,
+    phone: String,
+    comment: String,
     createdAt: { type: Date, default: Date.now }
 });
 
@@ -22,8 +25,8 @@ app.use(express.json());
 
 // API для добавления заказа
 app.post('/api/orders', async (req, res) => {
-    const { items, total } = req.body;
-    const order = new Order({ items, total });
+    const { items, total, address, phone, comment } = req.body;
+    const order = new Order({ items, total, address, phone, comment });
     await order.save();
     res.status(201).json({ message: 'Заказ успешно создан!' });
 });
